@@ -19,11 +19,13 @@ class App extends React.Component {
     $.ajax({
       url: '/repos',
       type: 'POST',
-      data: term,
+      data: JSON.stringify({owner: term}),
+      contentType: 'application/json',
       success: (data) => {
-        this.setState({
-          repos: data
-        });
+        console.log('SUCCESSFUL POST REQUEST @ CLIENT: ', data);
+        // this.setState({
+        //   repos: data
+        // });
       },
       error: (error) => {
         console.log('AJAX POST REQUEST FAILED: ', error);
