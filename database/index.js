@@ -1,20 +1,19 @@
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/fetcher');
-let db = mongoose.connection;
 
+let db = mongoose.connection;
 db.once('open', () => {
-  console.log('CONNECTED TO MONGODB!');
+  console.log('CONNECTED TO MongoDB!');
 });
 db.on('error', (error) => {
   console.log('FAILED TO CONNECT TO MONGODB:', error);
 });
 
-
 let repoSchema = mongoose.Schema({
   // TODO: your schema here!
-  // _id: Number, do we need if monogoDB auto adds this if omitted
+  _id: Number,
   owner: String,
-  repoName: String,
+  fullName: String,
   url: String,
   watchers: Number
 });
@@ -23,11 +22,12 @@ let Repo = mongoose.model('Repo', repoSchema);
 
 let save = (repo) => {
   // TODO: Your code here
-  // This function should save a repo or repos to
-  // the MongoDB
+  // This function should save a repo or repos to the MongoDB
+
   let record = new Repo({
+    _id: repo.id,
     owner: repo.owner,
-    repoName: repo.repoName,
+    fullName: repo.fullName,
     url: repo.url,
     watchers: repo.watchers
   });
@@ -40,8 +40,12 @@ let save = (repo) => {
   });
 };
 
-let find = (users) => {
-  //Do we need to write this or can we use the native mongodb .find() method???
+let find = (callback) => {
+  Repo.find({}).limit(25).sort({watchers: -1})
+    .then((data) => {
+      console.log('MONOGODB SUCCESSFULLY SEARCHED THE DATABASE');
+      callback(data);
+    });
 };
 
 module.exports = {save, find};

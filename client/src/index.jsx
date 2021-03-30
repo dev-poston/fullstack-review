@@ -13,9 +13,27 @@ class App extends React.Component {
     this.onSearch = this.onSearch.bind(this);
   }
 
+  componentDidMount() {
+    $.ajax({
+      url: 'repos',
+      type: 'GET',
+      contentType: 'application/json',
+      success: (data) => {
+        console.log('COMPONENTDIDMOUNT AJAX GET REQUEST: ', data);
+        // Do stuff with data...
+        this.setState({
+          repos: data
+        });
+      },
+      error: (error) => {
+        console.log('COMPONENTDIDMOUNT FAILED: ', error);
+      }
+    });
+  }
+
   onSearch (term) {
-    console.log(`${term} was searched`);
     // TODO
+    console.log(`${term} was searched`);
     $.ajax({
       url: '/repos',
       type: 'POST',
@@ -23,9 +41,6 @@ class App extends React.Component {
       contentType: 'application/json',
       success: (data) => {
         console.log('SUCCESSFUL POST REQUEST @ CLIENT: ', data);
-        // this.setState({
-        //   repos: data
-        // });
       },
       error: (error) => {
         console.log('AJAX POST REQUEST FAILED: ', error);
