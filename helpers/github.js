@@ -17,12 +17,12 @@ let getReposByUsername = (user, callback) => {
   };
   axios(options)
     .then((response) => {
-      console.log('SUCCESSFULL AXIOS GET REQUEST: ', response);
+      console.log('SUCCESSFULL AXIOS GET REQUEST!');
       callback(response);
     })
     .catch((error) => {
       console.log('FAILED AXIOS GET REQUEST: ', error);
     });
-}
+};
 
 module.exports.getReposByUsername = getReposByUsername;

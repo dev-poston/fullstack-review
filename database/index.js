@@ -1,14 +1,22 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/fetcher', () => {
-  console.log('Connect to MongoDB');
+mongoose.connect('mongodb://localhost/fetcher');
+let db = mongoose.connection;
+
+db.once('open', () => {
+  console.log('CONNECTED TO MONGODB!');
 });
+db.on('error', (error) => {
+  console.log('FAILED TO CONNECT TO MONGODB:', error);
+});
+
 
 let repoSchema = mongoose.Schema({
   // TODO: your schema here!
   // _id: Number, do we need if monogoDB auto adds this if omitted
   owner: String,
+  repoName: String,
   url: String,
-  followers: Number
+  watchers: Number
 });
 
 let Repo = mongoose.model('Repo', repoSchema);
@@ -19,14 +27,15 @@ let save = (repo) => {
   // the MongoDB
   let record = new Repo({
     owner: repo.owner,
+    repoName: repo.repoName,
     url: repo.url,
-    followers: repo.followers
+    watchers: repo.watchers
   });
   record.save((err, data) => {
     if (err) {
       console.log('FAILED TO SAVE: ', err);
     } else {
-      console.log('MONOGODB SUCCESSFULLY SAVED TO DATABASE', data);
+      console.log('MONOGODB SUCCESSFULLY SAVED TO DATABASE!');
     }
   });
 };
