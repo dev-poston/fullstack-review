@@ -10,7 +10,6 @@ db.on('error', (error) => {
 });
 
 let repoSchema = mongoose.Schema({
-  // TODO: your schema here!
   _id: Number,
   owner: String,
   fullName: String,
@@ -21,8 +20,6 @@ let repoSchema = mongoose.Schema({
 let Repo = mongoose.model('Repo', repoSchema);
 
 let save = (repo) => {
-  // TODO: Your code here
-  // This function should save a repo or repos to the MongoDB
   let record = new Repo({
     _id: repo.id,
     owner: repo.owner,
@@ -34,7 +31,8 @@ let save = (repo) => {
     if (err) {
       console.log('FAILED TO SAVE: ', err);
     } else {
-      console.log('MONOGODB SUCCESSFULLY SAVED TO DATABASE!');
+      console.log('MONOGODB - SAVING TO DB!');
+      //callback(data);
     }
   });
 };
@@ -43,17 +41,17 @@ let find = (user, callback) => {
   console.log('FIND USER: ', user);
   Repo.find(user).limit(25).sort({watchers: -1})
     .then((data) => {
-      console.log('MONOGODB SUCCESSFULLY SEARCHED THE DATABASE');
+      console.log('MONOGODB - SEARCHING DB');
       callback(data);
     });
 };
 
 let update = (user, doc, callback) => {
-  console.log('USER @ UPDATE DB:', user);
+  console.log('MONGODB - USER TO UPDATE: ', user);
   Repo.update(user, doc)
     .then((data) => {
-      console.log('UPDATE @ DB', data);
-      //callback(data);
+      console.log('MONGODB - UPDATING DB', data);
+      callback(data);
     })
 };
 

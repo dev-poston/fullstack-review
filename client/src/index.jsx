@@ -39,20 +39,8 @@ class App extends React.Component {
       contentType: 'application/json',
       success: (data) => {
         console.log('SUCCESSFUL POST REQUEST @ CLIENT: ', data);
-        // gonna circle back after BMR to find a less hacky way of refreshing DOM after user query
-        $.ajax({
-          url: 'repos',
-          type: 'GET',
-          contentType: 'application/json',
-          success: (data) => {
-            console.log('COMPONENTDIDMOUNT AJAX GET REQUEST: ', data);
-            this.setState({
-              repos: data
-            });
-          },
-          error: (error) => {
-            console.log('COMPONENTDIDMOUNT FAILED: ', error);
-          }
+        this.setState({
+          repos: data
         });
       },
       error: (error) => {
