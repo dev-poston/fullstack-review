@@ -23,7 +23,6 @@ let Repo = mongoose.model('Repo', repoSchema);
 let save = (repo) => {
   // TODO: Your code here
   // This function should save a repo or repos to the MongoDB
-
   let record = new Repo({
     _id: repo.id,
     owner: repo.owner,
@@ -40,12 +39,22 @@ let save = (repo) => {
   });
 };
 
-let find = (callback) => {
-  Repo.find({}).limit(25).sort({watchers: -1})
+let find = (user, callback) => {
+  console.log('FIND USER: ', user);
+  Repo.find(user).limit(25).sort({watchers: -1})
     .then((data) => {
       console.log('MONOGODB SUCCESSFULLY SEARCHED THE DATABASE');
       callback(data);
     });
 };
 
-module.exports = {save, find};
+let update = (user, doc, callback) => {
+  console.log('USER @ UPDATE DB:', user);
+  Repo.update(user, doc)
+    .then((data) => {
+      console.log('UPDATE @ DB', data);
+      //callback(data);
+    })
+};
+
+module.exports = {save, find, update};

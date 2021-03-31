@@ -3,41 +3,49 @@ const app = express();
 const bodyParser = require('body-parser');
 const getRepos = require('../helpers/github.js');
 const db = require('../database/index.js');
-const cors = require('cors');
+const async = require('async');
 
 app.use(express.static(__dirname + '/../client/dist'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
 
 app.post('/repos', function (req, res) {
   console.log('POST REQUEST RECEIVED @ SERVER!');
-  // TODO - your code here!
-  // This route should take the github username provided and get the repo information from the github API
-  // then save the repo information in the database
 
-  getRepos.getReposByUsername(req.body.owner, (response) => {
-    for (let i = 0; i < response.data.length; i++) {
-      db.save({
-        id: response.data[i].id,
-        owner: response.data[i].owner.login,
-        fullName: response.data[i].full_name,
-        url: response.data[i].html_url,
-        watchers: response.data[i].watchers_count
+  db.find(req.body, (cursor) => {
+    if (cursor.length) {
+      getRepos.getReposByUsername(req.body.owner, (response) => {
+          let parseResponse = JSON.parse(response);
+          for (let i = 0; i < parseResponse.data.length; i++) {
+            db.update({_id: parseResponse.data[i].id}, {$set: {
+              owner: parseResponse.data[i].owner.login,
+              fullName: parseResponse.data[i].full_name,
+              url: parseResponse.data[i].html_url,
+              watchers: parseResponse.data[i].watchers_count
+            }});
+          }
+        });
+      res.status(200).send('Success');
+    } else {
+      getRepos.getReposByUsername(req.body.owner, (response) => {
+        let parseResponse = JSON.parse(response);
+        for (let i = 0; i < parseResponse.data.length; i++) {
+          db.save({
+            id: parseResponse.data[i].id,
+            owner: parseResponse.data[i].owner.login,
+            fullName: parseResponse.data[i].full_name,
+            url: parseResponse.data[i].html_url,
+            watchers: parseResponse.data[i].watchers_count
+          });
+        }
+        res.status(200).send('Success');
       });
     }
   });
-
-  res.status(200).send('Success');
 });
 
 app.get('/repos', function (req, res) {
-  // TODO - your code here!
-  // This route should send back the top 25 repos
-
-  db.find((cursor) => {
-    console.log('ALL MONGODB DOCUMENTS: ', cursor);
-
+  db.find({}, (cursor) => {
     res.status(200).send(cursor);
   });
 });
