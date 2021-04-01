@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
+const config = require('../config.js');
 
 
-mongoose.connect('mongodb://localhost/fetcher');
+//mongoose.connect('mongodb://localhost/fetcher');
+mongoose.connect(config.MONGODB_URI);
 let db = mongoose.connection;
 
 db.once('open', () => {
