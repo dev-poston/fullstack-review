@@ -32,7 +32,7 @@ app.post(serverURL, function (req, res) {
           updateArr.push(updateObj);
           db.update({_id: parseResponse.data[i].id}, {$set: updateObj});
         }
-        // res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Origin', '*');
         res.status(200).send(updateArr);
       });
     } else {
@@ -51,7 +51,7 @@ app.post(serverURL, function (req, res) {
           saveArr.push(saveObj);
           db.save(saveObj);
         }
-        // res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Origin', '*');
         res.status(200).send(saveArr);
       });
     }
