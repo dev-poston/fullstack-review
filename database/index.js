@@ -3,14 +3,24 @@ const mongoose = require('mongoose');
 //const config = require('../config.js');
 
 //mongoose.connect('mongodb://localhost/fetcher');
-mongoose.connect(process.env.MONGODB_URI);
-let db = mongoose.connection;
+// mongoose.connect(process.env.MONGODB_URI);
+// let db = mongoose.connection;
 
-db.once('open', () => {
-  console.log('CONNECTED TO MongoDB!');
-});
-db.on('error', (error) => {
-  console.log('FAILED TO CONNECT TO MONGODB:', error);
+// db.once('open', () => {
+//   console.log('CONNECTED TO MongoDB!');
+// });
+// db.on('error', (error) => {
+//   console.log('FAILED TO CONNECT TO MONGODB:', error);
+// });
+
+const MongoClient = require('mongodb').MongoClient;
+const uri = process.env.MONGODB_URI;
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+client.connect(err => {
+  const collection = client.db("test").collection("devices");
+  // perform actions on the collection object
+  console.log('CONNECTED TO MONGODB!');
+  client.close();
 });
 
 let repoSchema = mongoose.Schema({
