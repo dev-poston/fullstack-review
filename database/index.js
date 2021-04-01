@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 //const config = require('../config.js');
 
 //mongoose.connect('mongodb://localhost/fetcher');
-mongoose.connect(process.env.MONGODB_URI + '/fetcher');
+mongoose.connect(process.env.MONGODB_URI);
 let db = mongoose.connection;
 
 db.once('open', () => {
@@ -45,11 +45,11 @@ let find = (user, callback) => {
     .then((data) => {
       console.log('MONOGODB - SEARCHING DB');
       callback(data);
-    })
-    .catch((error) => {
-      console.log('MONOGODB - SEARCH FAILED');
-      callback(error);
-    })
+    });
+    // .catch((error) => {
+    //   console.log('MONOGODB - SEARCH FAILED');
+    //   callback(error);
+    // })
 };
 
 let update = (user, doc, callback) => {
