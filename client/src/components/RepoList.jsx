@@ -15,12 +15,16 @@ const RepoList = (props) => (
         </tr>
       </thead>
       <tbody>
-      {props.repos.map((item, index) => (
-        <RepoItem
-        key={index}
-        item={item}
-        />
-      ))}
+      {
+        Array.isArray(props.repos) ?
+        props.repos.map((item, index) => (
+          <RepoItem
+          key={index}
+          item={item}
+          />
+        )) :
+        <div></div>
+      }
       </tbody>
     </table>
   </div>
