@@ -13,25 +13,17 @@ const mongoose = require('mongoose');
 //   console.log('FAILED TO CONNECT TO MONGODB:', error);
 // });
 //=============================================================================
-// const MongoClient = require('mongodb').MongoClient;
-// const uri = process.env.MONGODB_URI;
-// const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-// client.connect(err => {
-//   const collection = client.db("test").collection("devices");
-//   // perform actions on the collection object
-//   console.log('CONNECTED TO MONGODB!');
-//   client.close();
-// });
+const MongoClient = require('mongodb').MongoClient;
+const uri = process.env.MONGODB_URI;
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+client.connect(err => {
+  const collection = client.db("test").collection("devices");
+  // perform actions on the collection object
+  console.log('CONNECTED TO MONGODB!');
+  client.close();
+});
 //==========================================================================
 
-const { MongoClient } = require("mongodb");
-
-// Replace the following with your Atlas connection string
-const url = process.env.MONGODB_URI;
-const client = new MongoClient(url);
-
- // The database to use
-const dbName = "test";
 let repoSchema = mongoose.Schema({
   _id: Number,
   owner: String,
