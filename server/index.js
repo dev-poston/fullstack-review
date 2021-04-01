@@ -58,6 +58,7 @@ app.post(serverURL, function (req, res) {
 
 app.get(serverURL, function (req, res) {
   db.find({}, (cursor) => {
+    console.log('GET REQ CURSOR: ', cursor);
     res.status(200).send(cursor);
   });
 });
