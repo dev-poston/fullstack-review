@@ -4,7 +4,7 @@ import $ from 'jquery';
 import Search from './components/Search.jsx';
 import RepoList from './components/RepoList.jsx';
 
-const serverURL = 'https://afternoon-atoll-48900.herokuapp.com/';
+const serverURL = 'https://afternoon-atoll-48900.herokuapp.com/repos/';
 
 class App extends React.Component {
   constructor(props) {
