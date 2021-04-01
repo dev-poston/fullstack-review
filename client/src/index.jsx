@@ -4,7 +4,7 @@ import $ from 'jquery';
 import Search from './components/Search.jsx';
 import RepoList from './components/RepoList.jsx';
 
-const server = 'https://connect-oregon.heroku.com/api/v3/repos';
+const serverURL = 'https://connect-oregon.heroku.com/api/v3/repos';
 
 class App extends React.Component {
   constructor(props) {
@@ -17,7 +17,8 @@ class App extends React.Component {
 
   componentDidMount() {
     $.ajax({
-      url: server + '/repos',
+      url: serverURL,
+      // headers: { 'Access-Control-Allow-Origin': },
       type: 'GET',
       contentType: 'application/json',
       success: (data) => {
@@ -35,7 +36,7 @@ class App extends React.Component {
   onSearch (term) {
     console.log(`${term} was searched`);
     $.ajax({
-      url: server + '/repos',
+      url: serverURL,
       type: 'POST',
       data: JSON.stringify({owner: term}),
       contentType: 'application/json',

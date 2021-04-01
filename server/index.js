@@ -12,9 +12,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
-const server = 'https://connect-oregon.heroku.com/api/v3/repos';
+const serverURL = 'https://connect-oregon.heroku.com/api/v3/repos';
 
-app.post(server, function (req, res) {
+app.post(serverURL, function (req, res) {
   db.find(req.body, (cursor) => {
     if (cursor.length) {
       console.log('USER FOUND - UPDATING RECORDS!');
@@ -56,7 +56,7 @@ app.post(server, function (req, res) {
   });
 });
 
-app.get(server, function (req, res) {
+app.get(serverURL, function (req, res) {
   db.find({}, (cursor) => {
     res.status(200).send(cursor);
   });
