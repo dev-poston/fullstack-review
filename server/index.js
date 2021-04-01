@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
-const serverURL = 'https://afternoon-atoll-48900.herokuapp.com/repos/';
+const serverURL = 'https://afternoon-atoll-48900.herokuapp.com/repos';
 
 app.post(serverURL, function (req, res) {
   db.find(req.body, (cursor) => {
