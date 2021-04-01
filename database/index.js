@@ -24,7 +24,7 @@ client.connect(err => {
 });
 //==========================================================================
 
-let repoSchema = client.Schema({
+let repoSchema = MongoClient.Schema({
   _id: Number,
   owner: String,
   fullName: String,
@@ -32,7 +32,7 @@ let repoSchema = client.Schema({
   watchers: Number
 });
 
-let Repo = client.model('Repo', repoSchema);
+let Repo = MongoClient.model('Repo', repoSchema);
 
 let save = (repo) => {
   let record = new Repo({
