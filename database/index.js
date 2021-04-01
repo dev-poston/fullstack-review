@@ -1,4 +1,4 @@
-require('dotenv').config()
+// require('dotenv').config()
 const mongoose = require('mongoose');
 //const config = require('../config.js');
 
@@ -41,7 +41,6 @@ let save = (repo) => {
 };
 
 let find = (user, callback) => {
-  console.log('MDB URI: ', process.env.MONGODB_URI);
   console.log('FIND USER: ', user);
   Repo.find(user).limit(25).sort({watchers: -1})
     .then((data) => {
