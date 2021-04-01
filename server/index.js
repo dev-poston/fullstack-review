@@ -5,12 +5,12 @@ const getRepos = require('../helpers/github.js');
 const db = require('../database/index.js');
 const Promise = require('bluebird');
 
+
 app.use(express.static(__dirname + '/../client/dist'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post('/repos', function (req, res) {
-
   db.find(req.body, (cursor) => {
     if (cursor.length) {
       console.log('USER FOUND - UPDATING RECORDS!');
@@ -46,7 +46,6 @@ app.post('/repos', function (req, res) {
           saveArr.push(saveObj);
           db.save(saveObj);
         }
-        console.log('SAVE ARRAY: ', saveArr);
         res.status(200).send(saveArr);
       });
     }

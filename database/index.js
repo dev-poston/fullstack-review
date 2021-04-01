@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/fetcher');
 
+
+mongoose.connect('mongodb://localhost/fetcher');
 let db = mongoose.connection;
+
 db.once('open', () => {
   console.log('CONNECTED TO MongoDB!');
 });
@@ -32,7 +34,6 @@ let save = (repo) => {
       console.log('FAILED TO SAVE: ', err);
     } else {
       console.log('MONOGODB - SAVING TO DB!');
-      //callback(data);
     }
   });
 };
