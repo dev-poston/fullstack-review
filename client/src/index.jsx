@@ -18,7 +18,7 @@ class App extends React.Component {
   componentDidMount() {
     $.ajax({
       url: serverURL,
-      headers: {'Access-Control-Allow-Origin': '*'},
+      headers: {'Access-Control-Allow-Origin': *},
       type: 'GET',
       contentType: 'application/json',
       success: (data) => {
@@ -37,7 +37,7 @@ class App extends React.Component {
     console.log(`${term} was searched`);
     $.ajax({
       url: serverURL,
-      headers: { 'Access-Control-Allow-Origin': '*'},
+      headers: { 'Access-Control-Allow-Origin': *},
       type: 'POST',
       data: JSON.stringify({owner: term}),
       contentType: 'application/json',
