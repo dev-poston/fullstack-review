@@ -4,7 +4,7 @@ import $ from 'jquery';
 import Search from './components/Search.jsx';
 import RepoList from './components/RepoList.jsx';
 
-const serverURL = 'https://connect-oregon.heroku.com/api/v3/repos';
+const serverURL = 'https://connect-oregon.heroku.com/api/v3/';
 
 class App extends React.Component {
   constructor(props) {

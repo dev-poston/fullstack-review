@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
-const serverURL = 'https://connect-oregon.heroku.com/api/v3/repos';
+const serverURL = 'https://connect-oregon.heroku.com/api/v3/';
 
 app.post(serverURL, function (req, res) {
   db.find(req.body, (cursor) => {
@@ -32,7 +32,7 @@ app.post(serverURL, function (req, res) {
           updateArr.push(updateObj);
           db.update({_id: parseResponse.data[i].id}, {$set: updateObj});
         }
-        res.header('Access-Control-Allow-Origin', '*');
+        // res.header('Access-Control-Allow-Origin', '*');
         res.status(200).send(updateArr);
       });
     } else {
@@ -51,7 +51,7 @@ app.post(serverURL, function (req, res) {
           saveArr.push(saveObj);
           db.save(saveObj);
         }
-        res.header('Access-Control-Allow-Origin', '*');
+        // res.header('Access-Control-Allow-Origin', '*');
         res.status(200).send(saveArr);
       });
     }
