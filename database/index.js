@@ -2,29 +2,20 @@
 const mongoose = require('mongoose');
 //const config = require('../config.js');
 
-//mongoose.connect('mongodb://localhost/fetcher');
-// mongoose.connect(process.env.MONGODB_URI);
-// let db = mongoose.connection;
+mongoose.connect('mongodb://localhost/fetcher');
+mongoose.connect(process.env.MONGODB_URI);
+let db = mongoose.connection;
 
-// db.once('open', () => {
-//   console.log('CONNECTED TO MongoDB!');
-// });
-// db.on('error', (error) => {
-//   console.log('FAILED TO CONNECT TO MONGODB:', error);
-// });
-//=============================================================================
-const MongoClient = require('mongodb').MongoClient;
-const uri = process.env.MONGODB_URI;
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-client.connect(err => {
-  const collection = client.db("fetcher").collection("repo");
-  // perform actions on the collection object
-  console.log('CONNECTED TO MONGODB!');
-  client.close();
+db.once('open', () => {
+  console.log('CONNECTED TO MongoDB!');
 });
-//==========================================================================
+db.on('error', (error) => {
+  console.log('FAILED TO CONNECT TO MONGODB:', error);
+});
+//=============================================================================
 
-let repoSchema = MongoClient.Schema({
+
+let repoSchema = mongoose.Schema({
   _id: Number,
   owner: String,
   fullName: String,
@@ -32,7 +23,7 @@ let repoSchema = MongoClient.Schema({
   watchers: Number
 });
 
-let Repo = MongoClient.model('Repo', repoSchema);
+let Repo = mongoose.model('Repo', repoSchema);
 
 let save = (repo) => {
   let record = new Repo({
