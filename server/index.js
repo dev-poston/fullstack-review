@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
-const serverURL = 'https://afternoon-atoll-48900.herokuapp.com/';
+const serverURL = 'https://afternoon-atoll-48900.herokuapp.com/repos/';
 
 app.post(serverURL, function (req, res) {
   db.find(req.body, (cursor) => {
@@ -32,7 +32,6 @@ app.post(serverURL, function (req, res) {
           updateArr.push(updateObj);
           db.update({_id: parseResponse.data[i].id}, {$set: updateObj});
         }
-        //res.header('Access-Control-Allow-Origin', '*');
         res.status(200).send(updateArr);
       });
     } else {
@@ -51,7 +50,6 @@ app.post(serverURL, function (req, res) {
           saveArr.push(saveObj);
           db.save(saveObj);
         }
-        //res.header('Access-Control-Allow-Origin', '*');
         res.status(200).send(saveArr);
       });
     }
@@ -60,7 +58,6 @@ app.post(serverURL, function (req, res) {
 
 app.get(serverURL, function (req, res) {
   db.find({}, (cursor) => {
-    //res.header('Access-Control-Allow-Origin', '*');
     res.status(200).send(cursor);
   });
 });
