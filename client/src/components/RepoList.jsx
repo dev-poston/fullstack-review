@@ -23,7 +23,7 @@ const RepoList = (props) => (
           item={item}
           />
         )) :
-        <div></div>
+        <tr></tr>
       }
       </tbody>
     </table>
