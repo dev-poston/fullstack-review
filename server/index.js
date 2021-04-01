@@ -4,11 +4,13 @@ const bodyParser = require('body-parser');
 const getRepos = require('../helpers/github.js');
 const db = require('../database/index.js');
 const Promise = require('bluebird');
+const cors = require('cors');
 
 
 app.use(express.static(__dirname + '/../client/dist'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
 
 const server = 'https://connect-oregon.heroku.com/api/v3/repos';
 
