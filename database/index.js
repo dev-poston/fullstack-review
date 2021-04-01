@@ -47,11 +47,11 @@ let find = (user, callback) => {
     .then((data) => {
       console.log('MONOGODB - SEARCHING DB');
       callback(data);
+    })
+    .catch((error) => {
+      console.log('MONOGODB - SEARCH FAILED');
+      callback(error);
     });
-    // .catch((error) => {
-    //   console.log('MONOGODB - SEARCH FAILED');
-    //   callback(error);
-    // })
 };
 
 let update = (user, doc, callback) => {
