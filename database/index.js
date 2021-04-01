@@ -17,14 +17,14 @@ const MongoClient = require('mongodb').MongoClient;
 const uri = process.env.MONGODB_URI;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 client.connect(err => {
-  const collection = client.db("test").collection("devices");
+  const collection = client.db("fetcher").collection("repo");
   // perform actions on the collection object
   console.log('CONNECTED TO MONGODB!');
   client.close();
 });
 //==========================================================================
 
-let repoSchema = mongoose.Schema({
+let repoSchema = client.Schema({
   _id: Number,
   owner: String,
   fullName: String,
@@ -32,7 +32,7 @@ let repoSchema = mongoose.Schema({
   watchers: Number
 });
 
-let Repo = mongoose.model('Repo', repoSchema);
+let Repo = client.model('Repo', repoSchema);
 
 let save = (repo) => {
   let record = new Repo({
