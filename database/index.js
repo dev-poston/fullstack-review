@@ -3,7 +3,11 @@ const mongoose = require('mongoose');
 //const config = require('../config.js');
 
 //mongoose.connect('mongodb://localhost/fetcher');
-mongoose.connect(process.env.MONGODB_URI);
+//mongoose.connect(process.env.MONGODB_URI);
+mongoose.connect(process.env.MONGODB_URI, {
+  useMongoClient: true,
+  /* other options */
+});
 let db = mongoose.connection;
 
 db.once('open', () => {
