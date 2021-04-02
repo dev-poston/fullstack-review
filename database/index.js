@@ -62,7 +62,7 @@ let update = (user, doc, callback) => {
     .then((data) => {
       console.log('MONGODB - UPDATING DB', data);
       callback(data);
-    })
+    });
 };
 
 module.exports = {save, find, update};

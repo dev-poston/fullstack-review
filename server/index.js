@@ -20,8 +20,9 @@ app.post(serverURL, function (req, res) {
   db.find(req.body, (cursor) => {
     if (cursor.length) {
       console.log('USER FOUND - UPDATING RECORDS!');
-      let updateArr = [];
+      // let updateArr = [];
       getRepos.getReposByUsername(req.body.owner, (response) => {
+        let updateCounter = 0;
         let parseResponse = JSON.parse(response);
         for (let i = 0; i < parseResponse.data.length; i++) {
           let updateObj = {
@@ -31,19 +32,27 @@ app.post(serverURL, function (req, res) {
             url: parseResponse.data[i].html_url,
             watchers: parseResponse.data[i].watchers_count
           };
-          updateArr.push(updateObj);
-          db.update({_id: parseResponse.data[i].id}, {$set: updateObj});
+          // updateArr.push(updateObj);
+          db.update({_id: parseResponse.data[i].id}, {$set: updateObj}, (data) => {
+            console.log('RECORDS UPDATED');
+            updateCounter += 1;
+            if (updateCounter === parseResponse.data.length) {
+              db.find({}, (cursor) => {
+                console.log('GET REQ CURSOR: ', cursor);
+                res.status(200).send(cursor);
+              });
+            }
+          });
         }
         // res.status(200).send(updateArr);
-        db.find({}, (cursor) => {
-          console.log('GET REQ CURSOR: ', cursor);
-          res.status(200).send(cursor);
-        });
+        // db.find({}, (cursor) => {
+        //   console.log('GET REQ CURSOR: ', cursor);
+        //   res.status(200).send(cursor);
+        // });
       });
     } else {
       getRepos.getReposByUsername(req.body.owner, (response) => {
         console.log('USER NOT FOUND - ADDING TO DB!');
-        // let saveArr = [];
         let saveCounter = 0;
         let parseResponse = JSON.parse(response);
         for (let i = 0; i < parseResponse.data.length; i++) {
@@ -54,23 +63,16 @@ app.post(serverURL, function (req, res) {
             url: parseResponse.data[i].html_url,
             watchers: parseResponse.data[i].watchers_count
           };
-          // saveArr.push(saveObj);
           db.save(saveObj, (data) => {
-            saveCounter += 1;
             console.log('SAVE COMPLETE');
+            saveCounter += 1;
             if (saveCounter === parseResponse.data.length) {
               db.find({}, (cursor) => {
-                console.log('GET REQ CURSOR: ', cursor);
                 res.status(200).send(cursor);
               });
             }
           });
         }
-        // res.status(200).send(saveArr);
-        // db.find({}, (cursor) => {
-        //   console.log('GET REQ CURSOR: ', cursor);
-        //   res.status(200).send(cursor);
-        // });
       });
     }
   });
@@ -78,7 +80,6 @@ app.post(serverURL, function (req, res) {
 
 app.get(serverURL, function (req, res) {
   db.find({}, (cursor) => {
-    console.log('GET REQ CURSOR: ', cursor);
     res.status(200).send(cursor);
   });
 });
