@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const getRepos = require('../helpers/github.js');
 const db = require('../database/index.js');
 const Promise = require('bluebird');
+let await = require('await');
 const cors = require('cors');
 require('dotenv').config();
 

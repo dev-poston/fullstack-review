@@ -25,7 +25,7 @@ let repoSchema = mongoose.Schema({
 
 let Repo = mongoose.model('Repo', repoSchema);
 
-let save = (repo) => {
+let save = async (repo) => {
   let record = new Repo({
     _id: repo.id,
     owner: repo.owner,
