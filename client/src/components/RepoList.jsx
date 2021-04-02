@@ -4,7 +4,7 @@ import RepoItem from './RepoItem.jsx';
 
 const RepoList = (props) => (
   <div>
-    Viewing {props.repos.length} repos:
+    Top {props.repos.length} repos:
     <table>
       <thead>
         <tr>

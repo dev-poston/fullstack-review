@@ -1,7 +1,7 @@
 require('dotenv').config()
 const mongoose = require('mongoose');
 const Promise = require('bluebird');
-let await = require('await');
+
 
 mongoose.connect(process.env.MONGODB_URI, {
   useMongoClient: true
@@ -38,13 +38,12 @@ let save = (repo, callback) => {
       console.log('FAILED TO SAVE: ', err);
     } else {
       callback(data);
-      console.log('MONOGODB - SAVING TO DB!');
+      console.log('MONOGODB - SAVING TO DB');
     }
   });
 };
 
 let find = (user, callback) => {
-  console.log('FIND USER: ', user);
   Repo.find(user).limit(25).sort({watchers: -1})
     .then((data) => {
       console.log('MONOGODB - SEARCHING DB');

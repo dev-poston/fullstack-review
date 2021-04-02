@@ -3,10 +3,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const getRepos = require('../helpers/github.js');
 const db = require('../database/index.js');
-const Promise = require('bluebird');
-let await = require('await');
 const cors = require('cors');
-require('dotenv').config();
 
 
 app.use(express.static(__dirname + '/../client/dist'));
@@ -19,8 +16,7 @@ const serverURL = '/repos';
 app.post(serverURL, function (req, res) {
   db.find(req.body, (cursor) => {
     if (cursor.length) {
-      console.log('USER FOUND - UPDATING RECORDS!');
-      // let updateArr = [];
+      console.log('USER FOUND - UPDATING RECORDS');
       getRepos.getReposByUsername(req.body.owner, (response) => {
         let updateCounter = 0;
         let parseResponse = JSON.parse(response);
@@ -32,27 +28,20 @@ app.post(serverURL, function (req, res) {
             url: parseResponse.data[i].html_url,
             watchers: parseResponse.data[i].watchers_count
           };
-          // updateArr.push(updateObj);
           db.update({_id: parseResponse.data[i].id}, {$set: updateObj}, (data) => {
             console.log('RECORDS UPDATED');
             updateCounter += 1;
             if (updateCounter === parseResponse.data.length) {
               db.find({}, (cursor) => {
-                console.log('GET REQ CURSOR: ', cursor);
                 res.status(200).send(cursor);
               });
             }
           });
         }
-        // res.status(200).send(updateArr);
-        // db.find({}, (cursor) => {
-        //   console.log('GET REQ CURSOR: ', cursor);
-        //   res.status(200).send(cursor);
-        // });
       });
     } else {
       getRepos.getReposByUsername(req.body.owner, (response) => {
-        console.log('USER NOT FOUND - ADDING TO DB!');
+        console.log('USER NOT FOUND - ADDING TO DB');
         let saveCounter = 0;
         let parseResponse = JSON.parse(response);
         for (let i = 0; i < parseResponse.data.length; i++) {
