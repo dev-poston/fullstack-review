@@ -43,7 +43,8 @@ app.post(serverURL, function (req, res) {
     } else {
       getRepos.getReposByUsername(req.body.owner, (response) => {
         console.log('USER NOT FOUND - ADDING TO DB!');
-        let saveArr = [];
+        // let saveArr = [];
+        let saveCounter = 0;
         let parseResponse = JSON.parse(response);
         for (let i = 0; i < parseResponse.data.length; i++) {
           let saveObj = {
@@ -53,16 +54,23 @@ app.post(serverURL, function (req, res) {
             url: parseResponse.data[i].html_url,
             watchers: parseResponse.data[i].watchers_count
           };
-          saveArr.push(saveObj);
+          // saveArr.push(saveObj);
           db.save(saveObj, (data) => {
+            saveCounter += 1;
             console.log('SAVE COMPLETE');
+            if (saveCounter === parseResponse.data.length) {
+              db.find({}, (cursor) => {
+                console.log('GET REQ CURSOR: ', cursor);
+                res.status(200).send(cursor);
+              });
+            }
           });
         }
         // res.status(200).send(saveArr);
-        db.find({}, (cursor) => {
-          console.log('GET REQ CURSOR: ', cursor);
-          res.status(200).send(cursor);
-        });
+        // db.find({}, (cursor) => {
+        //   console.log('GET REQ CURSOR: ', cursor);
+        //   res.status(200).send(cursor);
+        // });
       });
     }
   });
