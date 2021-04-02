@@ -1,6 +1,6 @@
 require('dotenv').config()
 const mongoose = require('mongoose');
-
+const Promise = require('bluebird');
 
 mongoose.connect(process.env.MONGODB_URI, {
   useMongoClient: true

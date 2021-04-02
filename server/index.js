@@ -5,7 +5,7 @@ const getRepos = require('../helpers/github.js');
 const db = require('../database/index.js');
 const Promise = require('bluebird');
 const cors = require('cors');
-require('dotenv').config()
+require('dotenv').config();
 
 
 app.use(express.static(__dirname + '/../client/dist'));
@@ -33,7 +33,11 @@ app.post(serverURL, function (req, res) {
           updateArr.push(updateObj);
           db.update({_id: parseResponse.data[i].id}, {$set: updateObj});
         }
-        res.status(200).send(updateArr);
+        // res.status(200).send(updateArr);
+        db.find({}, (cursor) => {
+          console.log('GET REQ CURSOR: ', cursor);
+          res.status(200).send(cursor);
+        });
       });
     } else {
       getRepos.getReposByUsername(req.body.owner, (response) => {
@@ -51,7 +55,11 @@ app.post(serverURL, function (req, res) {
           saveArr.push(saveObj);
           db.save(saveObj);
         }
-        res.status(200).send(saveArr);
+        // res.status(200).send(saveArr);
+        db.find({}, (cursor) => {
+          console.log('GET REQ CURSOR: ', cursor);
+          res.status(200).send(cursor);
+        });
       });
     }
   });
