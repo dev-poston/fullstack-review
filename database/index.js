@@ -32,7 +32,7 @@ let save = (repo) => {
     url: repo.url,
     watchers: repo.watchers
   });
-  record.save((err, data) => {
+  await record.save((err, data) => {
     if (err) {
       console.log('FAILED TO SAVE: ', err);
     } else {
