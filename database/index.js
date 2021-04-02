@@ -2,25 +2,35 @@ require('dotenv').config()
 const mongoose = require('mongoose');
 //const config = require('../config.js');
 
-// mongoose.connect('mongodb://localhost/fetcher');
-// mongoose.connect(process.env.MONGODB_URI);
-// let db = mongoose.connection;
+mongoose.connect('mongodb://localhost/fetcher');
+//mongoose.connect(process.env.MONGODB_URI);
+let db = mongoose.connection;
 
-// db.once('open', () => {
-//   console.log('CONNECTED TO MongoDB!');
-// });
-// db.on('error', (error) => {
-//   console.log('FAILED TO CONNECT TO MONGODB:', error);
-// });
-//=============================================================================
-const MongoClient = require('mongodb').MongoClient;
-const uri = "mongodb+srv://dev-poston:hrrpt27@cluster0.ua7kp.mongodb.net/fetcher?retryWrites=true&w=majority";
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-client.connect(err => {
-  const collection = client.db("test").collection("devices");
-  // perform actions on the collection object
-  client.close();
+db.once('open', () => {
+  console.log('CONNECTED TO MongoDB!');
 });
+db.on('error', (error) => {
+  console.log('FAILED TO CONNECT TO MONGODB:', error);
+});
+//=============================================================================
+// const MongoClient = require('mongodb').MongoClient;
+// const assert = require('assert');
+
+// // Connection URL
+// const url = process.env.MONGODB_URI;
+
+// // Database Name
+// const dbName = 'fetcher';
+// const client = new MongoClient(url);
+// // Use connect method to connect to the server
+// client.connect(function(err) {
+//   assert.equal(null, err);
+//   console.log('Connected successfully to server');
+
+//   const db = client.db(dbName);
+
+//   client.close();
+// });
 
 let repoSchema = mongoose.Schema({
   _id: Number,
