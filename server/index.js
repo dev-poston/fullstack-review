@@ -5,6 +5,7 @@ const getRepos = require('../helpers/github.js');
 const db = require('../database/index.js');
 const Promise = require('bluebird');
 const cors = require('cors');
+require('dotenv').config()
 
 
 app.use(express.static(__dirname + '/../client/dist'));

@@ -9,7 +9,7 @@ const RepoList = (props) => (
       <thead>
         <tr>
           <th>Owner</th>
-          <th>Watchers</th>
+          <th>Stars</th>
           <th>Repo Name</th>
           <th>Link</th>
         </tr>

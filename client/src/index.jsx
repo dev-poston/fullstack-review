@@ -19,7 +19,6 @@ class App extends React.Component {
     $.ajax({
       url: serverURL,
       type: 'GET',
-      // dataType: 'json',
       contentType: 'application/json',
       success: (data) => {
         console.log('COMPONENTDIDMOUNT AJAX GET REQUEST: ', data);
@@ -38,7 +37,6 @@ class App extends React.Component {
     $.ajax({
       url: serverURL,
       type: 'POST',
-      // dataType: 'json',
       data: JSON.stringify({owner: term}),
       contentType: 'application/json',
       success: (data) => {
