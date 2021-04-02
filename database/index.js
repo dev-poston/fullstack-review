@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 //const config = require('../config.js');
 
 //mongoose.connect('mongodb://localhost/fetcher');
-//================================================
+
 mongoose.connect(process.env.MONGODB_URI, {
   useMongoClient: true
 });
@@ -15,28 +15,7 @@ db.once('open', () => {
 db.on('error', (error) => {
   console.log('FAILED TO CONNECT TO MONGODB:', error);
 });
-//=============================================================================
-// const MongoClient = require('mongodb').MongoClient;
-// const assert = require('assert');
-// const url = process.env.MONGODB_URI;
 
-// const dbName = 'fetcher';
-// const client = new MongoClient(url);
-// client.connect(function(err) {
-//   assert.equal(null, err);
-//   console.log('Connected successfully to server');
-//   const db = client.db(dbName);
-//   client.close();
-// });
-//======================================================================
-// var MongoClient = require('mongodb').MongoClient;
-// var uri = process.env.MONGODB_URI;
-// MongoClient.connect(uri, function(err, client) {
-//   const collection = client.db("test").collection("devices");
-//   // perform actions on the collection object
-//   client.close();
-// });
-//====================================================================
 let repoSchema = mongoose.Schema({
   _id: Number,
   owner: String,
