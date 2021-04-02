@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 //const config = require('../config.js');
 
 // mongoose.connect('mongodb://localhost/fetcher');
+console.log('TYPEOF: ', typeof process.env.MONGODB_URI)
 mongoose.connect(process.env.MONGODB_URI);
 let db = mongoose.connection;
 
