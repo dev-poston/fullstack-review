@@ -25,7 +25,7 @@ let repoSchema = mongoose.Schema({
 
 let Repo = mongoose.model('Repo', repoSchema);
 
-let save = async (repo) => {
+let save = (repo, callback) => {
   let record = new Repo({
     _id: repo.id,
     owner: repo.owner,
@@ -33,10 +33,11 @@ let save = async (repo) => {
     url: repo.url,
     watchers: repo.watchers
   });
-  await record.save((err, data) => {
+  record.save((err, data) => {
     if (err) {
       console.log('FAILED TO SAVE: ', err);
     } else {
+      callback(data);
       console.log('MONOGODB - SAVING TO DB!');
     }
   });

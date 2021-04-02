@@ -54,7 +54,9 @@ app.post(serverURL, function (req, res) {
             watchers: parseResponse.data[i].watchers_count
           };
           saveArr.push(saveObj);
-          db.save(saveObj);
+          db.save(saveObj, (data) => {
+            console.log('SAVE COMPLETE');
+          });
         }
         // res.status(200).send(saveArr);
         db.find({}, (cursor) => {
